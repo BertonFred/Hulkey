@@ -1,0 +1,250 @@
+﻿<MVVM:ViewNavigationControl x:Class="Hulkey.PLL.BackOffice.ProduitDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:MVVM="clr-namespace:Hulkey.PLL.MVVM;assembly=Hulkey.PLL.MVVM"
+             xmlns:pcom="clr-namespace:Hulkey.PLL.PresentationCommon;assembly=Hulkey.PLL.PresentationCommon"
+             xmlns:entities="clr-namespace:Hulkey.DAL.Entities;assembly=Hulkey.DAL.Entities"
+             xmlns:local="clr-namespace:Hulkey.PLL.BackOffice"
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="800">
+    <Grid Margin="5">
+        <Grid.Resources>
+            <Style x:Key="AccentCircleButtonStyle"
+                           BasedOn="{StaticResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
+                           TargetType="{x:Type ButtonBase}">
+                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- COMMAND -->
+        <WrapPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <Button Width="48" Height="48" Margin="4" Style="{StaticResource AccentCircleButtonStyle}" Command="{Binding Path=HomeCmd}">
+                <iconPacks:PackIconModern Width="20" Height="20" Kind="Home" />
+            </Button>
+            <Label Grid.Row="0" Grid.Column="0" Content="{Binding Titre}" HorizontalAlignment="Left" Margin="4"
+                   Style="{DynamicResource DescriptionHeaderStyle}"/>
+        </WrapPanel>
+        <WrapPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
+            <Button Width="48" Height="48" Margin="4" Style="{StaticResource AccentCircleButtonStyle}" Command="{Binding Path=SaveCmd}">
+                <iconPacks:PackIconModern Width="20" Height="20" Kind="Save" />
+            </Button>
+            <Button Width="48" Height="48" Margin="4" Style="{StaticResource AccentCircleButtonStyle}" Command="{Binding Path=CloseCmd}">
+                <iconPacks:PackIconModern Width="20" Height="20" Kind="Close" />
+            </Button>
+        </WrapPanel>
+
+        <!-- WORPLACE -->
+        <Label Grid.Row="1" Grid.Column="0" Content="Nom" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name}" Width="80" HorizontalAlignment="Left"  Margin="3"/>
+
+        <Label Grid.Row="2" Grid.Column="0" Content="Description" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Description}" Margin="3"/>
+        
+        <Controls:MetroAnimatedSingleRowTabControl Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="4" Controls:TabControlHelper.Underlined="TabPanel"
+                                                   >
+            <TabItem Header="Prix">
+                <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Prix Vente HT" VerticalAlignment="Center"/>
+                    <WrapPanel Grid.Row="0" Grid.Column="1" >
+                        <TextBox Text="{Binding PrixVenteHT}" Width="80" HorizontalAlignment="Left" Margin="3"/>
+                        <Button Width="24" Height="24" Margin="4" Style="{StaticResource AccentCircleButtonStyle}" 
+                                ToolTip="Calculer le prix TTC depuis le HT"
+                                Command="{Binding Path=ComputeTTCCmd}">
+                            <iconPacks:PackIconModern Width="20" Height="20" Kind="Calculator" />
+                        </Button>
+                    </WrapPanel>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Code TVA" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Row="1" Grid.Column="1" Width="150" Margin="3" HorizontalAlignment="Left"
+                            Controls:TextBoxHelper.ClearTextButton="False"
+                            Controls:TextBoxHelper.Watermark="Choisir une tva..."
+                            ItemsSource="{Binding TVAs}"
+                            SelectedItem="{Binding SelectedTVA}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate >
+                                <WrapPanel>
+                                    <TextBlock Text="{Binding Code}" />
+                                    <TextBlock Text=" : " />
+                                    <TextBlock Text="{Binding Taux}" />
+                                </WrapPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <Label Grid.Row="2" Grid.Column="0" Content="Prix Vente TTC" VerticalAlignment="Center"/>
+                    <WrapPanel  Grid.Row="2" Grid.Column="1" >
+                        <TextBox Text="{Binding PrixVenteTTC}" Width="80" HorizontalAlignment="Left" Margin="3"/>
+                        <Button Width="24" Height="24" Margin="4" Style="{StaticResource AccentCircleButtonStyle}" 
+                                Command="{Binding Path=ComputeHTCmd}" 
+                                ToolTip="Calculer le prix HT depuis le TTC">
+                            <iconPacks:PackIconModern Width="20" Height="20" Kind="Calculator" />
+                        </Button>
+                    </WrapPanel>
+
+                    <Label Grid.Row="0" Grid.Column="2" Content="Catégorie" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Row="0" Grid.Column="3" Width="200" Margin="3" HorizontalAlignment="Left"
+                          Controls:TextBoxHelper.ClearTextButton="True"
+                          Controls:TextBoxHelper.Watermark="Choisir une catégorie..."
+                            ItemsSource="{Binding Categories}"
+                            SelectedItem="{Binding SelectedCategorie}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate >
+                                <WrapPanel>
+                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text=" : " />
+                                    <TextBlock Text="{Binding Description}" />
+                                </WrapPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Label Grid.Row="1" Grid.Column="2" Content="Sous-Catégorie" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Row="1" Grid.Column="3" Width="200" Margin="3" HorizontalAlignment="Left"
+                            Controls:TextBoxHelper.ClearTextButton="True"
+                            Controls:TextBoxHelper.Watermark="Choisir une sous-catégorie..."
+                            ItemsSource="{Binding SousCategories}"
+                            SelectedItem="{Binding SelectedSousCategorie}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate >
+                                <WrapPanel>
+                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text=" : " />
+                                    <TextBlock Text="{Binding Description}" />
+                                </WrapPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Composition">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".4*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width=".6*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Controls:ToggleSwitch Grid.Row="0" Grid.Column="0" Margin="3"
+                                   IsChecked="{Binding ProduitCompose}"
+                                   VerticalAlignment="Center"
+                                   Content="Activer la gestion de compostion produit"/>
+                    
+                    <WrapPanel Grid.Row="0"  Grid.Column="2" >
+                        <TextBox x:Name="txtSearch" Width="250" Height="25"  Text="{Binding Path=ProduitSearchText}"/>
+                        <Button x:Name="btnSearch" Content="Rechercher" VerticalAlignment="Center" Margin="4" Command="{Binding ProduitSearchCmd}"/>
+                    </WrapPanel>
+
+                    <pcom:ExDataGrid x:Name="DataGridComposition"
+                        Grid.Row="1" Grid.Column="0" Margin="5"
+                        AutoGenerateColumns="False"
+                        HeadersVisibility="All"
+                        ItemsSource="{Binding Path=ProduitCompositions}"
+                        SelectedItem="{Binding Path=SelectedProduitComposition}"
+                        RowHeaderWidth="20"
+                        SelectionUnit="FullRow"
+                        GridLinesVisibility="Vertical" 
+                        IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Ordre}" Header="Ordre" />
+                            <DataGridTextColumn Binding="{Binding Enfant.Name}" Header="Nom" />
+                            <DataGridTextColumn Binding="{Binding Enfant.Description}" Header="Description" />
+                        </DataGrid.Columns>
+                        <DataGrid.Style>
+                            <Style BasedOn="{StaticResource MetroDataGrid}" TargetType="{x:Type DataGrid}">
+                                <Setter Property="AlternatingRowBackground" Value="{DynamicResource GrayBrush10}" />
+                            </Style>
+                        </DataGrid.Style>
+                    </pcom:ExDataGrid>
+                    
+                    <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                        <Button Width="48" Height="48" Margin="4" Style="{StaticResource AccentCircleButtonStyle}" 
+                                Command="{Binding Path=CompositionAddAboveCmd}"
+                                IsEnabled="{Binding ProduitCompose}">
+                            <iconPacks:PackIconModern Width="20" Height="20" Kind="ListAddAbove" />
+                        </Button>
+                        <Button Width="48" Height="48" Margin="4" Style="{StaticResource AccentCircleButtonStyle}" 
+                                Command="{Binding Path=CompositionAddCmd}"
+                                IsEnabled="{Binding ProduitCompose}">
+                            <iconPacks:PackIconModern Width="20" Height="20" Kind="ListAdd" />
+                        </Button>
+                        <Button Width="48" Height="48" Margin="4" Style="{StaticResource AccentCircleButtonStyle}" 
+                                Command="{Binding Path=CompositionAddBelowCmd}"
+                                IsEnabled="{Binding ProduitCompose}">
+                            <iconPacks:PackIconModern Width="20" Height="20" Kind="ListAddBelow" />
+                        </Button>
+                        <Button Width="48" Height="48" Margin="4" Style="{StaticResource AccentCircleButtonStyle}" 
+                                Command="{Binding Path=CompositionDeleteCmd}"
+                                >
+                            <iconPacks:PackIconModern Width="20" Height="20" Kind="ListDelete" />
+                        </Button>
+                    </StackPanel>
+
+                    <pcom:ExDataGrid x:Name="DataGridProduits"
+                        Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="5"
+                        AutoGenerateColumns="False"
+                        HeadersVisibility="All"
+                        ItemsSource="{Binding Path=Produits}"
+                        SelectedItem="{Binding Path=SelectedProduit}"
+                        RowHeaderWidth="20"
+                        SelectionUnit="FullRow"
+                        GridLinesVisibility="Vertical" 
+                        IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Name}" Header="Nom" />
+                            <DataGridTextColumn Binding="{Binding CategorieName}" Header="Categorie" />
+                            <DataGridTextColumn Binding="{Binding SousCategorieName}" Header="Sous-Categorie" />
+                            <DataGridTextColumn Binding="{Binding Description}" Header="Description" />
+                            <DataGridTextColumn Binding="{Binding PrixVenteHT}" Header="Prix Vente HT" />
+                            <DataGridTextColumn Binding="{Binding PrixVenteTTC}" Header="Prix Vente TTC" />
+                        </DataGrid.Columns>
+                        <DataGrid.Style>
+                            <Style BasedOn="{StaticResource MetroDataGrid}" TargetType="{x:Type DataGrid}">
+                                <Setter Property="AlternatingRowBackground" Value="{DynamicResource GrayBrush10}" />
+                            </Style>
+                        </DataGrid.Style>
+                    </pcom:ExDataGrid>
+
+                </Grid>
+            </TabItem>
+        </Controls:MetroAnimatedSingleRowTabControl>
+
+
+    </Grid>
+</MVVM:ViewNavigationControl>

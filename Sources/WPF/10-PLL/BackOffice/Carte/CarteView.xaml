@@ -1,0 +1,234 @@
+﻿<MVVM:ViewNavigationControl x:Class="Hulkey.PLL.BackOffice.CarteView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:MVVM="clr-namespace:Hulkey.PLL.MVVM;assembly=Hulkey.PLL.MVVM"
+             xmlns:pcom="clr-namespace:Hulkey.PLL.PresentationCommon;assembly=Hulkey.PLL.PresentationCommon"
+             xmlns:entities="clr-namespace:Hulkey.DAL.Entities;assembly=Hulkey.DAL.Entities"
+             xmlns:local="clr-namespace:Hulkey.PLL.BackOffice"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="5">
+        <Grid.Resources>
+            <Style x:Key="AccentCircleButtonStyle"
+                           BasedOn="{StaticResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
+                           TargetType="{x:Type ButtonBase}">
+                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <DataTemplate DataType="{x:Type local:ItemTexteViewModel}">
+                <TextBlock Text="{Binding Titre}"/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type local:ItemProduitViewModel}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{Binding Titre}" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Column="1" Text="{Binding PrixVenteTTC}" HorizontalAlignment="Right"/>
+                </Grid>
+            </DataTemplate>
+
+        </Grid.Resources>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- HOME BTN -->
+        <WrapPanel Grid.Row="0" Grid.Column="0">
+            <Button Width="48" Height="48" Margin="4" Style="{StaticResource AccentCircleButtonStyle}" Command="{Binding Path=HomeCmd}">
+                <iconPacks:PackIconModern Width="20" Height="20" Kind="Home" />
+            </Button>
+            <Label Grid.Row="0" Grid.Column="0" Content="{Binding Titre}" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="4"
+                   Style="{DynamicResource DescriptionHeaderStyle}"/>
+        </WrapPanel>
+
+        <!-- LIST carte -->
+        <ListBox
+            Grid.Column="0" Grid.Row="1"
+            ItemsSource="{Binding Cartes}"
+            SelectedItem="{Binding SelectedCarte}"
+            Margin="10">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="5" BorderThickness="1" BorderBrush="SteelBlue" CornerRadius="4" Background="#D2691E">
+                        <Grid Margin="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*" MinWidth="200"/>
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconModern Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" 
+                                                      Width="40" Height="40" Margin="5"
+                                                      Kind="People" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" FontWeight="Bold" Text="{Binding Name}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ActiveCaisse}"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- CDE LIST -->
+        <WrapPanel Grid.Row="2"  Grid.Column="0" HorizontalAlignment="Left">
+            <Button Width="48" Height="48" Margin="4" Style="{StaticResource AccentCircleButtonStyle}" Command="{Binding Path=CreateCarteCmd}">
+                <iconPacks:PackIconModern Width="20" Height="20" Kind="Add" />
+            </Button>
+            <Button Width="48" Height="48" Margin="4" Style="{StaticResource AccentCircleButtonStyle}" Command="{Binding Path=EditCarteCmd}">
+                <iconPacks:PackIconModern Width="20" Height="20" Kind="Edit" />
+            </Button>
+            <Button Width="48" Height="48" Margin="4" Style="{StaticResource AccentCircleButtonStyle}" Command="{Binding Path=DeleteCarteCmd}">
+                <iconPacks:PackIconModern Width="20" Height="20" Kind="Delete" />
+            </Button>
+        </WrapPanel>
+
+        <!-- TABCONTROL -->
+        <WrapPanel Grid.Row="1" Grid.Column="1" Visibility="{Binding LoadCarteVisibility}">
+            <Button Width="48" Height="48" Margin="4" Style="{StaticResource AccentCircleButtonStyle}" 
+                    Command="{Binding LoadCarteItemsCmd}">
+                    <iconPacks:PackIconModern Width="20" Height="20" Kind="DiskUpload" />
+            </Button>
+            <TextBlock Text="Charger la compostion de la carte sélectionnée" 
+                       Margin="5" VerticalAlignment="Center"/>
+        </WrapPanel>
+        <TabControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"
+                    Visibility="{Binding TabControlVisibility}"
+                    ItemsSource="{Binding TabItems}"
+                    SelectedItem="{Binding SelectedTabItem}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Titre}"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <ListBox ItemsSource="{Binding Expanders}"
+                             SelectedItem="{Binding SelectedExpander}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Expander Header="{Binding Titre}" 
+                                          IsExpanded="{Binding IsExpanded}">
+                                    <ListBox ItemsSource="{Binding Items}"
+                                             SelectedItem="{Binding SelectedItem}">
+                                    </ListBox>
+                                </Expander>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+
+        <!--CDE TABCONTROL -->
+        <WrapPanel Grid.Row="2"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                   Visibility="{Binding TabControlVisibility}">
+            <Controls:DropDownButton Margin="5" Content="Ajouter">
+                <Controls:DropDownButton.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource {x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
+                        <Setter Property="Command" Value="{Binding CarteItemCreateCmd}" />
+                        <Setter Property="CommandParameter" Value="{Binding Tag}" />
+                    </Style>
+                </Controls:DropDownButton.ItemContainerStyle>
+                <Controls:DropDownButton.Icon>
+                    <iconPacks:PackIconModern Margin="6" Kind="Add" Foreground="#CC119EDA" />
+                </Controls:DropDownButton.Icon>
+                <Controls:DropDownButton.Items>
+                    <MenuItem Header="Une entrée carte" Tag="eCarteItem.Carte"/>
+                    <MenuItem Header="Un sous niveau carte" Tag="eCarteItem.SubCarte"/>
+                    <MenuItem Header="Une entrée menu" Tag="eCarteItem.Menu"/>
+                    <MenuItem Header="Un sous niveau menu" Tag="eCarteItem.SubMenu"/>
+                    <MenuItem Header="Un texte" Tag="eCarteItem.Texte"/>
+                    <MenuItem Header="Un produit" Tag="eCarteItem.Produit"/>
+                </Controls:DropDownButton.Items>
+            </Controls:DropDownButton>
+
+            <Controls:DropDownButton Margin="5" Content="Supprimer">
+                <Controls:DropDownButton.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource {x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
+                        <Setter Property="Command" Value="{Binding CarteItemDeleteCmd}" />
+                        <Setter Property="CommandParameter" Value="{Binding Tag}" />
+                    </Style>
+                </Controls:DropDownButton.ItemContainerStyle>
+                <Controls:DropDownButton.Icon>
+                    <iconPacks:PackIconModern Margin="6" Kind="Delete" Foreground="#CC119EDA" />
+                </Controls:DropDownButton.Icon>
+                <Controls:DropDownButton.Items>
+                    <MenuItem Header="Une entrée carte" Tag="eCarteItem.Carte"/>
+                    <MenuItem Header="Un sous niveau carte" Tag="eCarteItem.SubCarte"/>
+                    <MenuItem Header="Une entrée menu" Tag="eCarteItem.Menu"/>
+                    <MenuItem Header="Un sous niveau menu" Tag="eCarteItem.SubMenu"/>
+                    <MenuItem Header="Un texte" Tag="eCarteItem.Texte"/>
+                    <MenuItem Header="Un produit" Tag="eCarteItem.Produit"/>
+                </Controls:DropDownButton.Items>
+            </Controls:DropDownButton>
+
+            <Button Width="48" Height="48" Margin="4" Style="{StaticResource AccentCircleButtonStyle}"
+                    Command="{Binding Path=CloseCarteItemsCmd}">
+                <iconPacks:PackIconModern Width="20" Height="20" Kind="Close" />
+            </Button>
+            <Button Width="48" Height="48" Margin="4" Style="{StaticResource AccentCircleButtonStyle}"
+                    Command="{Binding Path=SaveCarteItemsCmd}">
+                <iconPacks:PackIconModern Width="20" Height="20" Kind="Save" />
+            </Button>
+        </WrapPanel>
+
+        <!-- FLYOUT SAISIE CARTE INFO -->
+        <Controls:Flyout Grid.Row="1" Grid.Column="1" 
+            HorizontalContentAlignment="Stretch"
+                             AnimateOpacity="True"
+                             Theme="Adapt"
+                             CloseButtonIsCancel="True"
+                             Header="Carte"
+                             Position="Left"
+                             IsOpen="{Binding IsOpenFlyoutCarte}" >
+            <StackPanel Margin="10" Orientation="Vertical">
+                <Label Content="Nom"/>
+                <TextBox Text="{Binding CarteName}" Margin="3"/>
+
+                <Label Content="Ordre affichage"/>
+                <TextBox Text="{Binding CarteOrdre}" Margin="3"/>
+                
+                <Controls:ToggleSwitch Margin="3"
+                                   IsChecked="{Binding CarteActiveCaisse}"
+                                   VerticalAlignment="Center"
+                                   Content="Activer la carte pour l'affichage sur la caisse"/>
+
+                <WrapPanel HorizontalAlignment="Right">
+                    <Button Width="40" Height="40" Margin="4" Style="{StaticResource AccentCircleButtonStyle}" 
+                                Command="{Binding Path=CarteValidCmd}">
+                        <iconPacks:PackIconModern Width="20" Height="20" Kind="Check" />
+                    </Button>
+                    <Button Width="40" Height="40" Margin="4" Style="{StaticResource AccentCircleButtonStyle}" 
+                                Command="{Binding Path=CarteCancelCmd}">
+                        <iconPacks:PackIconModern Width="20" Height="20" Kind="Close" />
+                    </Button>
+                </WrapPanel>
+            </StackPanel>
+        </Controls:Flyout>
+
+    </Grid>
+</MVVM:ViewNavigationControl>

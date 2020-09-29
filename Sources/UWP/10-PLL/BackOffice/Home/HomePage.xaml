@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="Hulkey.PLL.BackOffice.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Style="{StaticResource PageStyle}"
+    mc:Ignorable="d">
+    <Grid
+        x:Name="ContentArea"
+        Margin="{StaticResource MediumLeftRightMargin}">
+        <Grid
+            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+            <!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
+                Place your content here.-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="HOME PAGE"/>
+            <Button Grid.Row="1" x:Name="btnCreateRecord" Content="CreateRecord" Click="BtnCreateRecord_Click" HorizontalAlignment="Left" Margin="-3,0,0,0" VerticalAlignment="Center"/>
+            <Button Grid.Row="2" x:Name="btnReadRecords" Content="ReadRecords" Click="BtnReadRecords_Click" HorizontalAlignment="Left" Margin="-3,0,0,0" VerticalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Page>

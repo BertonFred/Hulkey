@@ -1,0 +1,61 @@
+﻿<Page
+    x:Class="Hulkey.PLL.BackOffice.ArticleListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    Style="{StaticResource PageStyle}"
+    mc:Ignorable="d">
+    <Grid
+        x:Name="ContentArea"
+        Margin="{StaticResource MediumLeftRightMargin}">
+        <Grid
+            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0">Article liste</TextBlock>
+            <CommandBar Grid.Row="1">
+                <AppBarButton x:Name="btnNew" Icon="Add" Label="Créer" HorizontalAlignment="Left" />
+                <AppBarButton x:Name="btnEdit" Icon="Edit" Label="Edit" HorizontalAlignment="Left" />
+                <AppBarButton x:Name="btnnDelete" Icon="Delete" Label="Delete" HorizontalAlignment="Left"  />
+                <CommandBar.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="txtSearch" Width="250" Height="20" />
+                        <AppBarButton x:Name="btnSearch" Icon="Refresh" Label="Rechercher" />
+                    </StackPanel>
+                </CommandBar.Content>
+            </CommandBar>
+
+            <toolkit:DataGrid
+                    Grid.Row="2"
+                    Margin="5"
+                    CanUserReorderColumns="True"
+                    CanUserResizeColumns="True"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    GridLinesVisibility="All"
+                    ItemsSource="{x:Bind ViewModel.Articles}"
+                    SelectedItem="{x:Bind ViewModel.SelectedArticle, Mode=TwoWay}"
+                    RightTapped="DataGrid_RightTapped"
+                    DoubleTapped="DataGrid_DoubleTapped"
+                    Sorting="DataGrid_Sorting"
+                    >
+                <toolkit:DataGrid.Columns>
+                    <toolkit:DataGridTextColumn Header="Nom" Tag="Name" Binding="{Binding Name}" CanUserSort="True"/>
+                    <toolkit:DataGridTextColumn Header="Catégorie" Tag="CategorieName" Binding="{Binding CategorieName}" CanUserSort="True"/>
+                    <toolkit:DataGridTextColumn Header="Sous Catégorie" Tag="SousCategorieName" Binding="{Binding SousCategorieName}" CanUserSort="True"/>
+                    <toolkit:DataGridTextColumn Header="Prix Vente HT" Tag="PrixVenteHT" Binding="{Binding PrixVenteHT}" CanUserSort="True"/>
+                    <toolkit:DataGridTextColumn Header="Prix Vente TTC" Tag="PrixVenteTTC" Binding="{Binding PrixVenteTTC}" CanUserSort="True"/>
+                    <toolkit:DataGridTextColumn Header="TVA" Tag="TVA" Binding="{Binding TVATaux}" CanUserSort="True"/>
+                </toolkit:DataGrid.Columns>
+            </toolkit:DataGrid>
+
+
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9C91C7AC-5DBE-4A54-961A-622326581999}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>Hulkey.PLL.BackOffice</RootNamespace>
+    <AssemblyName>Hulkey.PLL.BackOffice</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ControlzEx.3.0.2.4\lib\net462\ControlzEx.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\MahApps.Metro.1.6.5\lib\net47\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro.IconPacks, Version=2.3.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\MahApps.Metro.IconPacks.2.3.0\lib\net46\MahApps.Metro.IconPacks.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ControlzEx.3.0.2.4\lib\net462\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Carte\CarteView.xaml.cs">
+      <DependentUpon>CarteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Carte\ItemProduitViewModel.cs" />
+    <Compile Include="Carte\ItemTexteViewModel.cs" />
+    <Compile Include="Carte\ItemViewModelBase.cs" />
+    <Compile Include="Carte\ItemExpanderViewModel.cs" />
+    <Compile Include="Carte\ItemTabViewModel.cs" />
+    <Compile Include="Carte\CarteViewModel.cs" />
+    <Compile Include="Categorie\CategorieListViewModel.cs" />
+    <Compile Include="Categorie\CategorieDetailViewModel.cs" />
+    <Compile Include="Categorie\CategorieListView.xaml.cs">
+      <DependentUpon>CategorieListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Categorie\CategorieDetailView.xaml.cs">
+      <DependentUpon>CategorieDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HomeBackOfficeView.xaml.cs">
+      <DependentUpon>HomeBackOfficeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HomeBackOfficeViewModel.cs" />
+    <Compile Include="Produit\ProduitListViewModel.cs" />
+    <Compile Include="Produit\ProduitListView.xaml.cs">
+      <DependentUpon>ProduitListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Produit\ProduitDetailViewModel.cs" />
+    <Compile Include="Produit\ProduitDetailView.xaml.cs">
+      <DependentUpon>ProduitDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\20-BLL\ServiceCommon\ServiceCommon.csproj">
+      <Project>{4d2febf6-a191-4889-969e-9e1c23a0118c}</Project>
+      <Name>ServiceCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\20-BLL\Services\Services.csproj">
+      <Project>{983f8630-3504-4ecd-9b3b-20ff639e66d7}</Project>
+      <Name>Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\30-DAL\DAL\DAL.csproj">
+      <Project>{ea276ba7-2eb8-4dc9-852c-6ad59a6f3c43}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\30-DAL\DTO\DTO.csproj">
+      <Project>{759d77d4-83cb-498b-b961-0a2dbf90aed5}</Project>
+      <Name>DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\30-DAL\Entities\Entities.csproj">
+      <Project>{1036c52c-e43b-4a05-9083-435b78d9eb81}</Project>
+      <Name>Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\30-DAL\Repository\Repository.csproj">
+      <Project>{314123CD-285B-4A7C-B574-CA6898FCC5F0}</Project>
+      <Name>Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MVVM\MVVM.csproj">
+      <Project>{7B1BF243-A128-4939-A5DD-6E107BE6BB6E}</Project>
+      <Name>MVVM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PresentationCommon\PresentationCommon.csproj">
+      <Project>{98f4ccdd-4879-45c0-8298-eb805c2b6096}</Project>
+      <Name>PresentationCommon</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Carte\CarteView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Categorie\CategorieListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Categorie\CategorieDetailView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HomeBackOfficeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Produit\ProduitListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Produit\ProduitDetailView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

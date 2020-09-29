@@ -1,0 +1,63 @@
+﻿<Page
+    x:Class="Hulkey.PLL.PresentationCommon.UtilisateurListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:pcom="using:Hulkey.PLL.PresentationCommon"
+    Style="{StaticResource PageStyle}"
+    mc:Ignorable="d">
+    <Grid x:Name="ContentArea"
+            Margin="24,5,24,-5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <CommandBar Grid.Row="0">
+                <AppBarButton x:Name="btnNew" Icon="Add" Label="Créer" HorizontalAlignment="Left"
+                              Click="{x:Bind ViewModel.Create}"/>
+                <AppBarButton x:Name="btnEdit" Icon="Edit" Label="Edit" HorizontalAlignment="Left"
+                              IsEnabled="{x:Bind pcom:Converters.IsNotNull(ViewModel.SelectedUtilisateur), Mode=OneWay}"
+                              Click="{x:Bind ViewModel.Edit}"/>
+                <AppBarButton x:Name="btnDelete" Icon="Delete" Label="Delete" HorizontalAlignment="Left"
+                              IsEnabled="{x:Bind pcom:Converters.IsNotNull(ViewModel.SelectedUtilisateur), Mode=OneWay}"
+                              Click="{x:Bind ViewModel.Delete}"/>
+                <CommandBar.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="txtSearch" Width="250" Height="32"/>
+                        <AppBarButton x:Name="btnSearch" Icon="Refresh" Label="Rechercher"
+                                      Click="{x:Bind ViewModel.Search}"/>
+                    </StackPanel>
+                </CommandBar.Content>
+            </CommandBar>
+
+            <toolkit:DataGrid
+                    Grid.Row="1"
+                    Margin="5"
+                    CanUserReorderColumns="True"
+                    CanUserResizeColumns="True"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    GridLinesVisibility="All"
+                    ItemsSource="{x:Bind ViewModel.Utilisateurs}"
+                    SelectedItem="{x:Bind ViewModel.SelectedUtilisateur, Mode=TwoWay}"
+                    RightTapped="{x:Bind ViewModel.Edit}"
+                    DoubleTapped="{x:Bind ViewModel.Edit}"
+                    Sorting="DataGrid_Sorting"
+                    >
+                <toolkit:DataGrid.Columns>
+                    <toolkit:DataGridTextColumn Header="Nom" Tag="Nom" Binding="{Binding Nom}" CanUserSort="True"/>
+                    <toolkit:DataGridTextColumn Header="Prenom" Tag="Prenom" Binding="{Binding Prenom}" CanUserSort="True"/>
+                    <toolkit:DataGridTextColumn Header="Password" Tag="Password" Binding="{Binding Password}" />
+                    <toolkit:DataGridTextColumn Header="eMail" Tag="eMail" Binding="{Binding eMail}" CanUserSort="True"/>
+                    <toolkit:DataGridTextColumn Header="Telephonne" Tag="Telephonne" Binding="{Binding Telephonne}" />
+                </toolkit:DataGrid.Columns>
+            </toolkit:DataGrid>
+
+
+        </Grid>
+    </Grid>
+</Page>

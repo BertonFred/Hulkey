@@ -1,0 +1,40 @@
+﻿<ContentDialog
+    x:Class="Hulkey.CreateDatabase.DatabaseDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Hulkey.CreateDatabase"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Creation de la base de données"
+    PrimaryButtonText="Button1"
+    SecondaryButtonText="Fermer"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="btnFermer">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="700"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2" Text="Creation de la base de données"/>
+        
+        <StackPanel Grid.Row="1" Grid.Column="0" >
+            <Button  x:Name="BtnCreateDatabase" Content="Create Database" Margin="5" Click="BtnCreateDatabase_Click"/>
+            <Button  x:Name="BtnCreateCategorie" Content="Create Categorie" Margin="5" Click="BtnCreateCategorie_Click"/>
+            <Button  x:Name="BtnCreateSousCategorie" Content="Create Sous Categorie" Margin="5" Click="BtnCreateSousCategorie_Click"/>
+            <Button  x:Name="BtnCreateFournisseur" Content="Create Fournisseur" Margin="5" Click="BtnCreateFournisseur_Click"/>
+            <Button  x:Name="BtnCreateArticle" Content="Create Article" Margin="5" Click="BtnCreateArticle_Click"/>
+            <Button  x:Name="BtnCreateUtilisateur" Content="Create Article" Margin="5" Click="BtnCreateUtilisateur_Click"/>
+        </StackPanel>
+
+        <ListBox Grid.Row="1" Grid.Column="1" Grid.RowSpan="5" x:Name="lbOutput" />
+
+    </Grid>
+</ContentDialog>

@@ -1,0 +1,15 @@
+﻿* Remise (libelle,taux)
+* Salle / Plan de salle
+* Bande de controle, trace metiers des actions sur le logiciel, ouverture session, fermerture, echec, crud commande
+* Commande, liste des produit commandé
+	*commentaire sur commande
+* reservation
+* connexion code PIN (4 digit) avec clavier
+* Caisse 
+* Encaissement, reglement des commandes
+* Mouvement de Caisse : Entree/Sortie
+* Historique / journal de caisse -> liste des encaissements
+
+reglementation
+LNE-34277
+lois de finance

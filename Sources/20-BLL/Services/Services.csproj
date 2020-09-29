@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Hulkey.SLL.Services</AssemblyName>
+    <RootNamespace>Hulkey.SLL.Services</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\30-DAL\Entities\Entities.csproj" />
+    <ProjectReference Include="..\..\30-DAL\Repository\Repository.csproj" />
+    <ProjectReference Include="..\ServiceCommon\ServiceCommon.csproj" />
+  </ItemGroup>
+
+</Project>
